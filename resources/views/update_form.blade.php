@@ -7,7 +7,7 @@
   <title>Document</title>
 </head>
 <body>
-  <form method="post" action="/update" >
+  <form method="post" action="/users/{{$user['id']}}" >
     @method("put")
     <div>이름 :  <input type="text" value="고길동" name="name" readonly></div>
     <div>생년월일(YYYY/MM/DD) : <input type="text" value="2000/07/24" name="birthday" readonly></div> 

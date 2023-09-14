@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 class UserController extends Controller
 {
 
-    protected $users= [
+    static protected $users= [
         ['id' => 1, 'name' => "고길동", 'birthday' => '1999/01/02', 'email' => 'a@gmail.com'],
         ['id' => 2, 'name' => "홍길동", 'birthday' => '1999/06/02', 'email' => 'b@gmail.com'],
         ['id' => 3, 'name' => "박동훈", 'birthday' => '1999/05/02', 'email' => 'c@gmail.com'],
@@ -21,7 +21,7 @@ class UserController extends Controller
     public function index()
     {
 
-        return view("welcome", ['users'=> $this->users]);
+        return view("welcome", ['users'=> UserController::$users]);
     }
 
     /**
@@ -59,7 +59,7 @@ class UserController extends Controller
             3. 그 $user 값을 blade에 전달하면서 실행.    
         */
         $userFound = null;
-        foreach($this->users as $user) {
+        foreach(UserController::$users as $user) {
             if($user["id"] == $id ) {
                 $userFound = $user;
                 break;
@@ -78,12 +78,14 @@ class UserController extends Controller
         // 2. 읽어온 그 사용자 정보를 blade 파일에 넘겨주면서 실행
         
         $userFound = null;
-        foreach($this->users as $user) {
+        foreach(UserController::$users as $user) {
             if($user["id"] == $id ) {
                 $userFound = $user;
                 break;
             }
         }
+        $userFound = $userFound != null ? $userFound : [];
+        return view('update_form', ['user'=>$userFound]);
 
     }
 
@@ -92,7 +94,26 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        // 1. Request 객체에서 사용자가 입력한 값을 빼와야 함
+        // 2. 위에서 빼온 값을 $id에 해당하는 DB레코드 수정
+        // 3. 사용자 상세보기 view로 연결
+        $name = $request->input("name"); 
+        $birthday = $request->input("birthday");
+        $email = $request->input("email");
+
+        $updateUser = null;
+        foreach(UserController::&$users as $user) {
+            if($user["id"] == $id ) {
+                $user["name"] = $name;
+                $user["email"] = $email;
+                $user["birthday"] = $birthday;
+                $updateUser = $user;
+                break;
+            }
+        }
+        $updateUser = $updateUser != null ? $updateUser : [];
+
+        return view('user_info', [ 'user' => $updateUser]);
     }
 
     /**

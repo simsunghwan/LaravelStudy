@@ -21,7 +21,7 @@
             <button type="submit">삭제</button>
             &nbsp;
         </form>   
-        <a href="/user/{{$user['id']}}/edit">
+        <a href="/users/{{$user['id']}}/edit">
             <button type="submit">수정</button>
         </a>
     @endif
