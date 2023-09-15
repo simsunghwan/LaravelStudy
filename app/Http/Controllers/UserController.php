@@ -102,7 +102,7 @@ class UserController extends Controller
         $email = $request->input("email");
 
         $updateUser = null;
-        foreach(UserController::&$users as $user) {
+        foreach(UserController::$users as $user) {
             if($user["id"] == $id ) {
                 $user["name"] = $name;
                 $user["email"] = $email;
@@ -113,7 +113,7 @@ class UserController extends Controller
         }
         $updateUser = $updateUser != null ? $updateUser : [];
 
-        return view('user_info', [ 'user' => $updateUser]);
+        return redirect("/users/{$id}");
     }
 
     /**
@@ -121,6 +121,15 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        // 1. PRIMARY KEY 속성값으로 $id 값을 가지는
+        // 레코드를 DB에서 찾아서 삭제
+        // 2. 리스트페이지 생성후 반환
+
+        for($i = 0; $i < sizeof(static::$users); $i++) {
+            if(static::$users[$i]['id'] == $id) {
+                unset(static::$users[$i]);
+            }
+        }
+        return redirect("/users");
     }
 }

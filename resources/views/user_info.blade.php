@@ -10,10 +10,9 @@
     @if (count($user) == 0)
         <h2>사용자를 찾을 수 없습니다.</h2>
     @else
-        <form action="" method="delete">
+        <form action="/users/{{$user['id']}}" method="post">
             @csrf
-            
-
+            @method('delete')
             <h2> 사용자 상세정보</h2>
             <h3> 이름 : {{$user["name"]}}</h3>
             <h3> 이메일 : {{$user['email']}}</h3>

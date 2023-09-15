@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome', ['users'=>$this->users]);
+    return view('welcome', ['users'=>[]]);
 });
 
 Route::resource('/users',UserController::class);
