@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 // use Illuminate\Http\Request;
@@ -19,3 +20,5 @@ Route::get('/', function () {
 });
 
 Route::resource('/users',UserController::class);
+
+Route::resource('/posts',PostController::class);
