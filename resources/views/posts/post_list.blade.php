@@ -7,7 +7,7 @@
   <title>post_list</title>
 </head>
 <body>
-  <h2>게시글 리스트</h2>
+  <h2>게시글 리스트({{$count}})</h2>
   <a href="/posts/create"><button>작성</button></a>
   <table>
     <tr>
